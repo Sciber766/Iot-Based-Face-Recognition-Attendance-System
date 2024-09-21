@@ -7,7 +7,7 @@ colorama==0.4.6
 ddlib==19.24.0
 et-xmlfile==1.1.0
 face-recognition==1.3.0
-face_recognition_models @ file:///D:/Workspace/CopyProject/first/face_recognition_installer
+face_recognition_models
 Flask==3.0.3
 Flask-Cors==5.0.0
 Flask-Login==0.6.3
