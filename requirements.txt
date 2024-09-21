@@ -1,9 +1,6 @@
 bidict==0.23.1
 dlib
-<<<<<<< HEAD
 pandas
-=======
->>>>>>> cc92270648ec5378c163ab32c5964612ea59e807
 blinker==1.8.2
 certifi==2024.8.30
 charset-normalizer==3.3.2
