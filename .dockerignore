@@ -1,0 +1,27 @@
+# Ignore the Dockerfile itself if you don't want it in the image
+Dockerfile
+
+# Ignore any local configuration files
+*.pyc
+__pycache__/
+*.pdb
+
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore environment files
+.env
+
+# Ignore IDE files (e.g., VS Code)
+.vscode/
+
+# Ignore any log files
+*.log
+
+# Ignore temporary files
+tmp/
+temp/
+
+# Ignore data folder contents if not needed
+data/*

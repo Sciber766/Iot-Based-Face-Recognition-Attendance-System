@@ -12,9 +12,9 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Paths to store data
-ENCODINGS_FILE = 'encodings.json'
-USERS_FILE = 'users.json'
-STUDENTS_FILE = 'students.xlsx'
+ENCODINGS_FILE = 'data/encodings.json'
+USERS_FILE = 'data/users.json'
+STUDENTS_FILE = 'data/students.xlsx'
 PREDEFINED_PASSWORD = 'Skynet'
 
 # Load existing encodings
