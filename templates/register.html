@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="fullBox">
+        <div class="registerbox">
+            <h1>Register</h1>
+        </div>
+        <div class="form">
+            <form method="post" action="{{ url_for('register') }}">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                    
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                    
+                <label for="confirm_password">Confirm Password:</label><br>
+                <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+                
+                <label for="role">Role:</label><br>
+                <select id="role" name="role" required>
+                    <option value="professor">Professor</option>
+                    <option value="student">Student</option>
+                </select><br><br>
+                
+                <div id="predefined_password_field" style="display:none;">
+                    <label for="predefined_password">Predefined Password:</label><br>
+                    <input type="password" id="predefined_password" name="predefined_password"><br>
+                </div>
+            
+                <button type="submit">Register</button>
+            </form>
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+        </div>
+        <a href="{{ url_for('login') }}">Back to Login</a>
+    </div>
+    
+    <script>
+    function togglePredefinedPasswordField() {
+        const predefinedPasswordField = document.getElementById("predefined_password_field");
+        const role = document.getElementById("role").value;
+        predefinedPasswordField.style.display = role === "professor" ? "block" : "none";
+    }
+
+    document.getElementById("role").addEventListener("change", togglePredefinedPasswordField);
+
+    // Call the function on page load to set the initial state
+    togglePredefinedPasswordField();
+    </script>
+</body>
+</html>

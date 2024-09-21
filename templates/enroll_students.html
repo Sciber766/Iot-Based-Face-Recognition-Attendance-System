@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Enroll Students</title>
+</head>
+<body>
+    <div class="profhead">
+        <h1>Enroll Students</h1>
+    </div>
+    <div class="enrollBox">
+        <div class="registerbox">
+            <h2>Fill Details</h2>
+        </div>
+
+        <div class="flash-messages" id="flash-messages"></div>
+
+        <div class="enrollform">
+            <form id="enrollForm" enctype="multipart/form-data">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="student_code">Student Code:</label>
+                <input type="text" id="student_code" name="student_code" required><br>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required><br>
+
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required><br>
+
+                <label for="course">Course:</label>
+                <input type="text" id="course" name="course" required><br>
+
+                <div>
+                    <label for="camera_feed">Camera Feed:</label><br>
+                    <video id="camera_feed" width="380px" autoplay></video>
+                    <button type="button" id="captureButton">Capture</button>
+                    <canvas id="canvas" style="display:none;"></canvas>
+                </div><br>
+
+                <div>
+                    <label for="imagePreview">Captured Image:</label><br>
+                    <img id="imagePreview" width="380px" style="display:none;" />
+                </div><br>
+
+                <input type="hidden" id="imageData" name="imageData">
+                <button type="submit" class="btn" id="enrollButton" disabled>Enroll</button>
+            </form>
+        </div>
+
+        <a href="{{ url_for('professor_dashboard') }}" class="btn">Back to Dashboard</a>
+    </div>
+
+    <script>
+        const video = document.getElementById('camera_feed');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const captureButton = document.getElementById('captureButton');
+        const enrollForm = document.getElementById('enrollForm');
+        const enrollButton = document.getElementById('enrollButton');
+        const imageDataInput = document.getElementById('imageData');
+        const imagePreview = document.getElementById('imagePreview');
+        const flashMessages = document.getElementById('flash-messages');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => console.error("Error accessing camera: ", err));
+
+        captureButton.addEventListener('click', () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg').split(',')[1];
+            imageDataInput.value = imageData;
+
+            imagePreview.src = canvas.toDataURL('image/jpeg');
+            imagePreview.style.display = 'block';
+            enrollButton.disabled = false;
+        });
+
+        enrollForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            if (!imageDataInput.value) {
+                alert('Please capture an image before submitting.');
+                return;
+            }
+
+            const formData = new FormData(enrollForm);
+
+            fetch('{{ url_for("enroll_students") }}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display success or error message
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add(data.status === 'success' ? 'flash-message success' : 'flash-message danger');
+                messageDiv.textContent = data.message;
+                flashMessages.appendChild(messageDiv);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

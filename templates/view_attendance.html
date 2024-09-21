@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="styles.css">
+    <title>View Attendance</title>
+</head>
+<body>
+    <div class="profhead">
+        <h1>View Attendance</h1>
+    </div>
+    <div class="view-attendance-container">
+        <form method="post" action="{{ url_for('view_attendance') }}">
+            <label for="file">Choose an attendance file:</label>
+            <select name="file" id="file">
+                {% for file in files %}
+                    <option value="{{ file }}">{{ file }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn">View</button>
+        </form>
+        {% if tables %}
+            <h2>Attendance Data</h2>
+            <div class="table-container">
+                {{ tables[0]|safe }}
+            </div>
+        {% endif %}
+        <a href="{{ url_for('professor_dashboard') }}" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

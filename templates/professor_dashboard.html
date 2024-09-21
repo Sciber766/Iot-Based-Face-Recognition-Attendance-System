@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="profhead">
+        <h1>Professor Dashboard</h1>
+    </div>
+    <div class="fullBox">
+        <div class="form">
+            <form action="{{ url_for('enroll_students') }}">
+                <button type="submit" class="btn" name="enroll_students">Enroll Students</button>
+            </form>          
+
+            <form action="{{ url_for('view_attendance') }}">
+                <button type="submit" class="btn">View Attendance</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

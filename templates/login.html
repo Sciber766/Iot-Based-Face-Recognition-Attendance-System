@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="fullBox">
+        <div class="registerbox">
+            <h1>Login</h1>
+        </div>
+        <div class="form">
+            <form method="post" action="{{ url_for('login') }}">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <input type="checkbox" name="passShow" onclick="togglePassword()">
+                <label for="passShow">Show Password</label> 
+        
+                <button type="submit" name="Login">Login</button>
+            </form>
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+        </div>
+   
+        <a href="{{ url_for('register') }}">New user? Register here</a>
+    </div>
+    
+    <script>
+    function togglePassword() {
+        var password = document.getElementById("password");
+        password.type = (password.type === "password") ? "text" : "password";
+    }
+    </script>
+</body>
+</html>
